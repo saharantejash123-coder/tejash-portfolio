@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS  — Tejash Saharan personal website
+   Bright, futuristic, premium. White base + electric accents.
+   ============================================================ */
+@theme {
+  /* Surfaces */
+  --color-paper: #ffffff;
+  --color-mist: #f4f6fb;
+  --color-haze: #eef2fb;
+  --color-line: #e4e9f4;
+
+  /* Ink (text) */
+  --color-ink: #0b1020;
+  --color-ink-soft: #4a5673;
+  --color-ink-faint: #6b7490; /* ~4.6:1 on white — WCAG AA compliant for small text */
+
+  /* Accents */
+  --color-brand: #2b6bff;      /* electric blue */
+  --color-brand-strong: #1747d6;
+  --color-accent: #ff7a18;     /* bright orange */
+  --color-leaf: #10c98a;       /* fresh green */
+
+  /* Fonts (wired to next/font in layout.tsx) */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 22%, transparent);
+  color: var(--color-brand-strong);
+}
+
+/* Custom scrollbar (desktop) */
+@media (pointer: fine) {
+  ::-webkit-scrollbar { width: 11px; }
+  ::-webkit-scrollbar-track { background: var(--color-mist); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-brand), var(--color-brand-strong));
+    border-radius: 99px;
+    border: 3px solid var(--color-mist);
+  }
+}
+
+/* Accessible focus rings */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+
+  /* Animated gradient text */
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-brand) 0%,
+      #6d4bff 35%,
+      var(--color-accent) 70%,
+      var(--color-leaf) 100%
+    );
+    background-size: 220% 220%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradient-pan 9s ease infinite;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: color-mix(in srgb, #ffffff 72%, transparent);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid color-mix(in srgb, #ffffff 90%, var(--color-line));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 24px 60px -28px rgba(20, 40, 120, 0.28);
+  }
+
+  .glass-soft {
+    background: color-mix(in srgb, #ffffff 60%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+    border: 1px solid color-mix(in srgb, #ffffff 85%, var(--color-line));
+  }
+
+  /* Soft premium card */
+  .card-soft {
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 22px 50px -30px rgba(18, 33, 90, 0.32);
+  }
+
+  /* Animated conic gradient border */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      var(--color-brand),
+      var(--color-accent),
+      var(--color-leaf),
+      var(--color-brand)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: spin-border 6s linear infinite;
+    z-index: -1;
+  }
+
+  /* Glow */
+  .glow-brand { box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-brand) 30%, transparent), 0 18px 50px -16px color-mix(in srgb, var(--color-brand) 55%, transparent); }
+
+  .hairline { border: 1px solid var(--color-line); }
+
+  /* Decorative animated grid + aurora background */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-brand) 7%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes spin-border {
+  to { --angle: 360deg; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.06); }
+}
+@keyframes aurora-drift {
+  0% { transform: translate3d(-6%, -3%, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(6%, 4%, 0) rotate(8deg) scale(1.12); }
+  100% { transform: translate3d(-6%, -3%, 0) rotate(0deg) scale(1); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+/* Fast, GPU-cheap page-enter (used by app/template.tsx on every navigation) */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+/* Indeterminate top progress bar (used by app/loading.tsx) */
+@keyframes loadbar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+.page-enter { animation: page-enter 0.22s var(--ease-out-expo) both; }
+.animate-loadbar { animation: loadbar 0.9s var(--ease-out-expo) infinite; }
+
+.animate-float { animation: float-y 7s ease-in-out infinite; }
+.animate-pulse-soft { animation: pulse-soft 6s ease-in-out infinite; }
+.animate-aurora { animation: aurora-drift 22s ease-in-out infinite; }
+.animate-marquee { animation: marquee 28s linear infinite; }
+
+/* ============================================================
+   CURSOR GLOW (driven by CursorGlow.tsx)
+   ============================================================ */
+.cursor-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--mx, -100px) var(--my, -100px),
+    color-mix(in srgb, var(--color-brand) 16%, transparent),
+    transparent 70%
+  );
+  transition: opacity 0.3s ease;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-glow { display: none; }
+}

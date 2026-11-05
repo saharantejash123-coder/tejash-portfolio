@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1747d6"/>
+      <stop offset="0.5" stop-color="#2b6bff"/>
+      <stop offset="1" stop-color="#6d4bff"/>
+    </linearGradient>
+    <radialGradient id="light" cx="0.35" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#dbe6ff" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <rect width="1000" height="1000" fill="url(#light)"/>
+
+  <!-- soft accent glow bottom -->
+  <circle cx="760" cy="880" r="320" fill="#ff7a18" opacity="0.16"/>
+  <circle cx="180" cy="760" r="260" fill="#10c98a" opacity="0.14"/>
+
+  <!-- friendly silhouette bust -->
+  <g transform="translate(0,40)">
+    <circle cx="500" cy="400" r="150" fill="url(#fig)"/>
+    <path d="M260 880 C260 690 360 600 500 600 C640 600 740 690 740 880 Z" fill="url(#fig)"/>
+  </g>
+
+  <!-- monogram chip -->
+  <g transform="translate(500,945)">
+    <rect x="-92" y="-34" width="184" height="58" rx="29" fill="#0b1020" opacity="0.55"/>
+    <text x="0" y="6" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="30" font-weight="800" fill="#ffffff" letter-spacing="2">TEJASH</text>
+  </g>
+</svg>
